@@ -1,0 +1,97 @@
+Cristian Rodriguez
+CMPM 121
+2/22/19
+
+Final Assignment Pitch
+Game Name: Android Enigma
+Game Genre: Third-person platforming
+Number of players: 1 player
+GitHub Repository Link: https://github.com/crod95/CristianRodriguez_FinalAssignment121
+
+Game Overview:
+Android Enigma has the player take control of multiple androids who are trying 
+to escape from their creators who constantly use them for testing and experiments.
+The player can switch freely between each of the androids as they try to solve 
+various puzzles and challenges that may or may not require multiple androids 
+to complete properly. If any of the playable androids are caught by creators, 
+then the player loses that android and will have to make do with the androids 
+he/she has left. The player must get through all the levels and challenges to 
+finish the game and free the androids!
+
+Task List:
+Assignment 7 Tasks:
+•Basic level layout
+	oLevel design
+		-Create the general layout of the first level and maybe even the second level if time-permitting
+		-Atmosphere
+•At night in a dark laboratory where one android has escaped from its cage and is now trying to free its friends from other cages 
+	oEnvironmental Objects
+		-Things to fill up the space in the game (either from the assets store or make them)
+		-Going for a cartoony atmosphere for this game so less attention towards realism and detail and more towards fun
+	oPuzzle ideas and locations
+		-Needing keys to open certain doors to new areas
+		-Pressure plate puzzle where the player must leave androids on pressure plates in order to activate certain doors and use the other androids to complete them (optional)
+		-Turning on power for sections of the map to make them accessible
+		-Using various parts scattered across the map to create contraptions traps (optional)
+•Android character
+	oCharacter meshes
+		-Basic mesh for the android like a small robot with cool texture for it (either from the assets store or make it)
+	oControls
+		-Basic rigid body movement using either the directional keys or ‘w’-‘a’-‘s’-‘d’ keys
+•Creator character models
+	oMeshes
+		-Evil scientists
+	oBasic pathing
+		-Moving in patrol paths for most of the games
+•Camera and character controls
+	oSwapping between various androids in a certain order (maybe through one key press or have them assigned to different number keys
+	oSwitching between first-person and third-person (optional)
+
+Assignment 8 Tasks:
+•Advanced level layout
+	oStarting Locations
+	oSpawn locations
+	oDoors
+	oSensors (optional)
+	oButtons (optional)
+	oAdd more details to the level and more environmental objects
+•Pickups
+	oKeys
+	oContraptions (optional)
+	oPuzzle pieces
+•Creating puzzles and challenges
+	oCreate start state, end state, and most of the states in between
+	oEnemy Spawns (optional)
+	oMechanics 
+•Android character
+	oMechanics
+		-Jumping
+		-Interactions (optional)
+	oAnimations
+		-Idle
+		-Jumping
+		-Moving
+	oHUD
+•Game Over conditions 
+	oWin
+	oLose
+	oMenu
+
+Assignment 9 Tasks:
+•Character polishing and tweaking
+	oOptimizing movement
+•Creator polishing and tweaking
+	oOptimize AI and pathing
+•Camera polishing
+	oOptimizing movement and how it follows the player
+	oFinishing the HUD
+•Level Polishing
+	oTextures
+		-Replace all placeholder art
+		-Scale and move properly on the meshes
+	oRemove all debug and testing parts from the game (scripts and in-game)
+•Bug fixes
+	oChecking that the puzzles work properly
+	oMakes sure everything works properly and there are no glitches left
+
+*Any parts marked as (optional) are time-permitted features for this project
