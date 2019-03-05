@@ -17,7 +17,12 @@ public class TextureTilingController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        myMat = GetComponent<Renderer>().material;
+        //Workaround to avoid memory leak
+        //var tempMaterial = new Material(renderer.sharedMaterial);
+        //tempMaterial.color = Color.red;
+        //renderer.sharedMaterial = tempMaterial;
+
+        myMat = GetComponent<Renderer>().sharedMaterial;
         this.prevScale = gameObject.transform.lossyScale;
         this.prevTextureToMeshZ = this.textureToMeshZ;
 

@@ -13,15 +13,15 @@ public class ThirdPersonScript : MonoBehaviour
     public Transform focusOn;
     public Transform cameraMove;
     private Camera thirdViewCam;
-    private float dist = 4.0f;
+    private float dist = 2.0f;
 
     //Record the current x and y values of the camera
     private float currentX = 0.0f;
     private float currentY = 0.0f;
 
     //Control how sensitive the camea moves in the x and y axis
-    private float sensitivityX = 10.0f;
-    private float sensitivityY = 10.0f;
+    private float sensitivityX = 40.0f;
+    private float sensitivityY = 40.0f;
 
     // Start is called before the first frame update
     void Start()
