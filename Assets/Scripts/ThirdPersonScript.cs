@@ -20,8 +20,8 @@ public class ThirdPersonScript : MonoBehaviour
     private float currentY = 0.0f;
 
     //Control how sensitive the camea moves in the x and y axis
-    private float sensitivityX = 40.0f;
-    private float sensitivityY = 40.0f;
+    private float sensitivityX = 10.0f;
+    private float sensitivityY = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,7 @@ public class ThirdPersonScript : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 direct = new Vector3(dist, 0, 0);
-        Quaternion rotate = Quaternion.Euler(0, currentX * 2, currentY * 2);
+        Quaternion rotate = Quaternion.Euler(0, currentX * sensitivityX, currentY * sensitivityY);
         //Put the camera on top of the player and rotate depending on the player's movements
         cameraMove.position = focusOn.position + rotate * direct;
         cameraMove.LookAt(focusOn.position);

@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
 {
     //Keeps track of the amount of points that the player has picked up and the number of androids he/she has
     private int pointCount, activeAndroids;
-    public GameObject door01, door02, door03, door04, door05;
+    GameObject door01, door02, door03, door04, door05;
     public bool key01Acquired, key02Acquired, key03Acquired, key04Acquired, key05Acquired;
-    public GameObject key01, key02, key03, key04, key05;
-    public GameObject keyEffect;
+    Transform doorTransform;
+    GameObject key01, key02, key03, key04, key05;
+    GameObject keyEffect, pointEffect;
+
+    //Use the LockManager script as a reference for the variables
+    LockManager LM;
 
     //Used for debugging
     public GameObject testObject;
@@ -34,6 +38,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody me;
     public Vector3 jump;
 
+    //Animator
+    Animator charAnim; 
+
     private void Start()
     {
         pointCount = 0;
@@ -42,17 +49,19 @@ public class PlayerController : MonoBehaviour
         key03Acquired = false;
         key04Acquired = false;
         key05Acquired = false;
-        //key01 = GameObject.Find("Key Card 01");
-        //key05 = GameObject.Find("");
-        //key05 = GameObject.Find("");
-        //key05 = GameObject.Find("");
-        //key05 = GameObject.Find("");
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+
+        //Reference to the LockManager script (don't make an instance of it otherwise varables will not be saved globally)
+        LM = GameObject.Find("Doors").GetComponent<LockManager>();
 
         //testObject = GameObject.FindGameObjectWithTag("Test");
 
         keyEffect = GameObject.Find("Key Effect");
+        pointEffect = GameObject.Find("Point Effect");
         me = GetComponent<Rigidbody>();
+
+        //Amimations
+        charAnim = GameObject.FindWithTag("Robot1").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -65,6 +74,7 @@ public class PlayerController : MonoBehaviour
         //function called whenever the user is trying to move or turn
         ApplyInput(moveAxis, turnAxis);
         JumpUp();
+        charAnim.SetTrigger("breathe");
     }
 
     //Add extra gravity to the player
@@ -78,12 +88,14 @@ public class PlayerController : MonoBehaviour
         //input1 represents input for moving while input2 represents input for turning
         movePlayer(input1);
         turnPlayer(input2);
+        //charAnim.SetTrigger("locomotion");
     }
 
     //Function that handles moving the player's character around
     private void movePlayer(float moveInput)
     {
         me.AddForce(transform.forward * moveInput * moveSpeed, ForceMode.Force);
+        
         // Debug.Log("Move Pressed");
     }
 
@@ -98,7 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-
+            charAnim.SetTrigger("jump");
             me.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
@@ -112,40 +124,62 @@ public class PlayerController : MonoBehaviour
         {
             //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             key01Acquired = true;
+            LM.SetPickupKey01(true);
             Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             other.gameObject.SetActive(false);
             Debug.Log("Key 1 acquired: " + key01Acquired);
         }
-        /*
+        
         //Picking up Key card 02 to open the second door
-        if (other == key02)
+        if (other.gameObject.name == "Key Card 02")
         {
             //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             key02Acquired = true;
+            LM.SetPickupKey02(true);
+            Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             other.gameObject.SetActive(false);
+            Debug.Log("Key 2 acquired: " + key02Acquired);
         }
         //Picking up Key card 03 to open the third door
-        if (other == key03)
+        if (other.gameObject.name == "Key Card 03")
         {
             //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             key03Acquired = true;
+            LM.SetPickupKey03(true);
+            Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             other.gameObject.SetActive(false);
+            Debug.Log("Key 3 acquired: " + key03Acquired);
         }
         //Picking up Key card 04 to open the fourth door
-        if (other == key04)
+        if (other.gameObject.name == "Key Card 04")
         {
             //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             key04Acquired = true;
+            LM.SetPickupKey04(true);
+            Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             other.gameObject.SetActive(false);
+            Debug.Log("Key 4 acquired: " + key04Acquired);
         }
         //Picking up Key card 05 to open the fifth door
-        if (other == key05)
+        if (other.gameObject.name == "Key Card 05")
         {
             //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             key05Acquired = true;
+            LM.SetPickupKey05(true);
+            Instantiate(keyEffect, other.transform.position, other.transform.rotation);
             other.gameObject.SetActive(false);
+            Debug.Log("Key 5 acquired: " + key05Acquired);
         }
-        */
+
+        if (other.gameObject.CompareTag("Point"))
+        {
+            //Instantiate(keyEffect, other.transform.position, other.transform.rotation);
+            pointCount++;
+            LM.SetPointCount(pointCount);
+            Instantiate(pointEffect, other.transform.position, other.transform.rotation);
+            other.gameObject.SetActive(false);
+            Debug.Log("Point Count: " + pointCount);
+        }
     }
 
     //OnCollisionStay is called once per frame for every collider/rigidbody that is touching rigidbody/collider.
@@ -153,34 +187,4 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = true;
     }
-
-    /*
-     * Link: https://gamedev.stackexchange.com/questions/89693/how-could-i-constrain-player-movement-to-the-surface-of-a-3d-object-using-unity
-    private void UpdatePlayerTransform(Vector3 movementDirection)
-    {
-        RaycastHit hitInfo;
-
-        if (GetRaycastDownAtNewPosition(movementDirection, out hitInfo))
-        {
-            Quaternion targetRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
-            Quaternion finalRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, float.PositiveInfinity);
-
-            transform.rotation = finalRotation;
-            transform.position = hitInfo.point + hitInfo.normal * .5f;
-        }
-    }
-
-    private bool GetRaycastDownAtNewPosition(Vector3 movementDirection, out RaycastHit hitInfo)
-    {
-        Vector3 newPosition = transform.position;
-        Ray ray = new Ray(transform.position + movementDirection * Speed, -transform.up);
-
-        if (Physics.Raycast(ray, out hitInfo, float.PositiveInfinity, WorldLayerMask))
-        {
-            return true;
-        }
-
-        return false;
-    }
-    */
 }

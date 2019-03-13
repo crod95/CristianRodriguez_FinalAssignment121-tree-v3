@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - KeyCard01
+  - Point
+  - Robot1
+  - Robot2
+  - Robot3
   layers:
   - Default
   - TransparentFX
